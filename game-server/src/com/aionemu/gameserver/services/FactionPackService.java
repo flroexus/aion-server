@@ -65,8 +65,8 @@ public class FactionPackService {
 			if (template != null && template.getRace() == player.getOppositeRace())
 				continue;
 			SystemMailService.sendMail(
-				"Beyond Aion", player.getName(), "Faction Pack", "Greetings Daeva!\n\n"
-					+ "In gratitude for your decision to join this faction we prepared an additional item pack.\n\n" + "Enjoy your stay on Beyond Aion!",
+				"Aion Classic PH", player.getName(), "Faction Pack", "Greetings Daeva!\n\n"
+					+ "In gratitude for your decision to join this faction we prepared an additional item pack.\n\n" + "Enjoy your stay on Aion Classic PH!",
 				e.getId(), e.getCount(), 0, LetterType.EXPRESS);
 		}
 	}
