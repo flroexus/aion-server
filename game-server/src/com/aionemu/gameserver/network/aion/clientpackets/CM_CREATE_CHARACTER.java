@@ -12,6 +12,7 @@ import com.aionemu.gameserver.model.account.PlayerAccountData;
 import com.aionemu.gameserver.model.gameobjects.Item;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 import com.aionemu.gameserver.model.gameobjects.player.PlayerCommonData;
+import com.aionemu.gameserver.model.PlayerClass;
 import com.aionemu.gameserver.network.aion.AionConnection.State;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_CREATE_CHARACTER;
 import com.aionemu.gameserver.services.AccountService;
@@ -71,7 +72,7 @@ public class CM_CREATE_CHARACTER extends AbstractCharacterEditPacket {
 			IDFactory.getInstance().releaseId(playerCommonData.getPlayerObjId());
 		} else {
 			List<Item> equipment = InventoryDAO.loadEquipment(player.getObjectId());
-			accPlData.setVisibleItems(equipment);
+			accPlData.setEquipment(equipment);
 			accPlData.setCreationDate(new Timestamp(System.currentTimeMillis()));
 			PlayerService.storeCreationTime(player.getObjectId(), accPlData.getCreationDate());
 
@@ -93,8 +94,16 @@ public class CM_CREATE_CHARACTER extends AbstractCharacterEditPacket {
 			return SM_CREATE_CHARACTER.RESPONSE_INVALID_NAME;
 		if (NameRestrictionService.isForbidden(characterName))
 			return SM_CREATE_CHARACTER.RESPONSE_FORBIDDEN_CHAR_NAME;
-		if (!playerClass.isStartingClass())
-			return SM_CREATE_CHARACTER.RESPONSE_FORBIDDEN_CLASS;
+		 // Hardcoding the starting class check here
+    boolean isStartingClass = playerClass == PlayerClass.WARRIOR || playerClass == PlayerClass.SCOUT
+            || playerClass == PlayerClass.MAGE || playerClass == PlayerClass.PRIEST;
+
+    // Hardcoding the disabled class check here (e.g., ENGINEER and ARTIST are disabled)
+    boolean isDisabled = playerClass == PlayerClass.ENGINEER || playerClass == PlayerClass.ARTIST;
+
+    // Replace the previous isStartingClass() check with the new hardcoded check
+    if (!isStartingClass || isDisabled)
+        return SM_CREATE_CHARACTER.RESPONSE_FORBIDDEN_CLASS;
 		if (GSConfig.CHARACTER_CREATION_MODE == 0 && account.getPlayerAccDataList().stream().anyMatch(p -> p.getPlayerCommonData().getRace() != race)) {
 			return SM_CREATE_CHARACTER.RESPONSE_OTHER_RACE;
 		}
