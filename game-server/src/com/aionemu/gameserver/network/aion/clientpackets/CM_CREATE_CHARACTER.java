@@ -72,7 +72,7 @@ public class CM_CREATE_CHARACTER extends AbstractCharacterEditPacket {
 			IDFactory.getInstance().releaseId(playerCommonData.getPlayerObjId());
 		} else {
 			List<Item> equipment = InventoryDAO.loadEquipment(player.getObjectId());
-			accPlData.setEquipment(equipment);
+			accPlData.setVisibleItems(equipment);
 			accPlData.setCreationDate(new Timestamp(System.currentTimeMillis()));
 			PlayerService.storeCreationTime(player.getObjectId(), accPlData.getCreationDate());
 
@@ -94,7 +94,7 @@ public class CM_CREATE_CHARACTER extends AbstractCharacterEditPacket {
 			return SM_CREATE_CHARACTER.RESPONSE_INVALID_NAME;
 		if (NameRestrictionService.isForbidden(characterName))
 			return SM_CREATE_CHARACTER.RESPONSE_FORBIDDEN_CHAR_NAME;
-		 // Hardcoding the starting class check here
+		// Hardcoding the starting class check here
     boolean isStartingClass = playerClass == PlayerClass.WARRIOR || playerClass == PlayerClass.SCOUT
             || playerClass == PlayerClass.MAGE || playerClass == PlayerClass.PRIEST;
 
