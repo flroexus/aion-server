@@ -484,9 +484,9 @@ public final class VeteranRewardService {
 					return;
 				}
 				for (RewardItem item : items)
-					SystemMailService.sendMail("Beyond Aion", player.getName(), "Veteran Reward",
+					SystemMailService.sendMail("Aion Classic PH", player.getName(), "Veteran Reward",
 						"Greetings Daeva!\n\nIt has been over " + (i == 0 ? "a month" : (i + 1) + " months")
-							+ " now, since you joined us.\nWe send you this and hope you stay with us even longer :)\n\n~ Beyond Aion",
+							+ " now, since you joined us.\nWe send you this and hope you stay with us even longer :)\n\n~ Aion Classic PH",
 						item.getId(), item.getCount(), 0, LetterType.BLACKCLOUD);
 			}
 	}

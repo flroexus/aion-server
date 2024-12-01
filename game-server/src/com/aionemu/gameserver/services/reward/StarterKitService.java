@@ -65,10 +65,10 @@ public class StarterKitService {
 			if (!itemMap.containsKey(level))
 				continue;
 			for (RewardItem e : itemMap.get(level)) {
-				SystemMailService.sendMail("Beyond Aion", player.getName(), "Starter Kit",
+				SystemMailService.sendMail("Aion Classic PH", player.getName(), "Starter Kit",
 					"Greetings Daeva!\n\n"
 						+ "In gratitude for your decision to join our server, we would like to support you with an additional item pack during the leveling.\n\n"
-						+ "Enjoy your stay on Beyond Aion!",
+						+ "Enjoy your stay on Aion Classic PH!",
 					e.getId(), e.getCount(), 0, LetterType.EXPRESS);
 			}
 		}
